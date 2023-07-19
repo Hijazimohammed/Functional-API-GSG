@@ -4,7 +4,13 @@ import Footer from '../Footer';
 
 const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}>
       <Header />
       {children}
       <Footer />
