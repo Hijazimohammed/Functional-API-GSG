@@ -6,18 +6,18 @@ import { STORES_COLUMNS } from '../../constants/Stores';
 import { useStoreContext } from '../../Context';
 
 export const StoresPage = () => {
-  const { stores, isLoading, handleDelete } = useStoreContext();
+  const { stores, isLoading, handleDelete, getStore } = useStoreContext();
 
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
     navigate(PATHS.STORES.EDIT.replace(':id', id), { replace: true });
+    getStore(id);
   };
   const handleCreate = () => {
     navigate(PATHS.STORES.CREATE, { replace: true });
   };
   const handleView = (row) => {
-    console.log(row, 'is viewed');
     navigate(PATHS.STORES.VIEW.replace(':id', row.id), { replace: true });
   };
 

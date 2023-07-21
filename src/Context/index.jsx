@@ -27,9 +27,8 @@ export const StoreProvider = ({ children }) => {
       .then((res) => {
         const tempStores = stores.filter((store) => store.id != id);
         setStores(tempStores);
-        console.log(id, 'is deleted');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   };
   const getStores = () => {
     setIsLoading(true);
@@ -39,7 +38,7 @@ export const StoreProvider = ({ children }) => {
         setStores(res.data);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   };
   useEffect(getStores, []);
 
@@ -51,7 +50,7 @@ export const StoreProvider = ({ children }) => {
         setStore(res.data);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   };
   const createStore = (body) => {
     setIsLoading(true);
@@ -61,14 +60,13 @@ export const StoreProvider = ({ children }) => {
         setStores([...stores, data]);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   };
   const editStore = (body, id) => {
     setIsLoading(true);
     axios
       .put(`https://some-data.onrender.com/stores/${id}`, body)
       .then(({ data }) => {
-        console.log(data, 'is edited');
         setStores([...stores.filter((store) => store.id != id), data]);
 
         setIsLoading(false);
