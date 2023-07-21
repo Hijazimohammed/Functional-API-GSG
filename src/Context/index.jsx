@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { PATHS } from '../router/paths';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 const StoreContext = React.createContext({
   stores: [],
@@ -23,7 +24,7 @@ export const StoreProvider = ({ children }) => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://some-data.onrender.com/stores/${id}`)
+      .delete(API_URL + id)
       .then((res) => {
         const tempStores = stores.filter((store) => store.id != id);
         setStores(tempStores);
@@ -33,7 +34,7 @@ export const StoreProvider = ({ children }) => {
   const getStores = () => {
     setIsLoading(true);
     axios
-      .get('https://some-data.onrender.com/stores')
+      .get(API_URL)
       .then((res) => {
         setStores(res.data);
         setIsLoading(false);
@@ -45,7 +46,7 @@ export const StoreProvider = ({ children }) => {
   const getStore = (id) => {
     setIsLoading(true);
     axios
-      .get(`https://some-data.onrender.com/stores/${id}`)
+      .get(API_URL + id)
       .then((res) => {
         setStore(res.data);
         setIsLoading(false);
@@ -55,7 +56,7 @@ export const StoreProvider = ({ children }) => {
   const createStore = (body) => {
     setIsLoading(true);
     axios
-      .post('https://some-data.onrender.com/stores', body)
+      .post(API_URL, body)
       .then(({ data }) => {
         setStores([...stores, data]);
         setIsLoading(false);
@@ -65,7 +66,7 @@ export const StoreProvider = ({ children }) => {
   const editStore = (body, id) => {
     setIsLoading(true);
     axios
-      .put(`https://some-data.onrender.com/stores/${id}`, body)
+      .put(API_URL + id, body)
       .then(({ data }) => {
         setStores([...stores.filter((store) => store.id != id), data]);
 
