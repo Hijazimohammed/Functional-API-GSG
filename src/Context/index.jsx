@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { PATHS } from '../router/paths';
-import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../config/api';
 
 const StoreContext = React.createContext({
