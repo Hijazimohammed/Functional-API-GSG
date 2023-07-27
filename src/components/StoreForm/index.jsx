@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import './style.css';
 
 const inputsArray = [
   {
@@ -17,8 +18,8 @@ const inputsArray = [
 
 export const StoreForm = ({ handleSubmit, isLoading, store }) => {
   const [data, setData] = useState({
-    name: store?.name || '',
-    cities: store?.cities || '',
+    name: '',
+    cities: '',
   });
 
   const onHandleSubmit = (e) => {
@@ -38,6 +39,9 @@ export const StoreForm = ({ handleSubmit, isLoading, store }) => {
       };
     });
   };
+  useEffect(() => {
+    store && setData({ name: store.name, cities: store.cities });
+  }, [store]);
   return (
     <>
       <form onSubmit={onHandleSubmit}>
@@ -48,7 +52,7 @@ export const StoreForm = ({ handleSubmit, isLoading, store }) => {
               <textarea
                 id={input.id}
                 name={input.name}
-                value={data.cities}
+                value={data?.cities}
                 onChange={handleChangeInput}
               />
             ) : (
@@ -56,7 +60,7 @@ export const StoreForm = ({ handleSubmit, isLoading, store }) => {
                 type={input.type}
                 id={input.id}
                 name={input.name}
-                value={data.name}
+                value={data?.name}
                 onChange={handleChangeInput}
               />
             )}

@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect } from 'react';
 import { API_URL } from '../config/api';
+import useAPI from '../Hooks/useAPI';
 
 const StoreContext = React.createContext({
   stores: [],
-  setStores: [],
   store: {},
-  setStore: {},
   isLoading: false,
-  setIsLoading: false,
   handleDelete: (id) => {},
   getStore: (id) => {},
   createStore: (body) => {},
@@ -16,72 +13,35 @@ const StoreContext = React.createContext({
 });
 
 export const StoreProvider = ({ children }) => {
-  const [stores, setStores] = useState([]);
-  const [store, setStore] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const { stores, store, get, getSingle, put, del, post, isLoading } =
+    useAPI(API_URL);
 
   const handleDelete = (id) => {
-    axios
-      .delete(API_URL + id)
-      .then((res) => {
-        const tempStores = stores.filter((store) => store.id != id);
-        setStores(tempStores);
-      })
-      .catch((err) => console.log(err.message));
+    del(id);
   };
   const getStores = () => {
-    setIsLoading(true);
-    axios
-      .get(API_URL)
-      .then((res) => {
-        setStores(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err.message));
+    get();
   };
-  useEffect(getStores, []);
-
+  useEffect(() => {
+    getStores();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const getStore = (id) => {
-    setIsLoading(true);
-    axios
-      .get(API_URL + id)
-      .then((res) => {
-        setStore(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err.message));
+    getSingle(id);
   };
   const createStore = (body) => {
-    setIsLoading(true);
-    axios
-      .post(API_URL, body)
-      .then(({ data }) => {
-        setStores([...stores, data]);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err.message));
+    post(body);
   };
   const editStore = (body, id) => {
-    setIsLoading(true);
-    axios
-      .put(API_URL + id, body)
-      .then(({ data }) => {
-        setStores([...stores.filter((store) => store.id != id), data]);
-
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
+    put(id, body);
   };
 
   return (
     <StoreContext.Provider
       value={{
         stores: stores,
-        setStores: setStores,
         store: store,
-        setStore: setStore,
         isLoading: isLoading,
-        setIsLoading: setIsLoading,
         handleDelete: handleDelete,
         getStore: getStore,
         createStore: createStore,

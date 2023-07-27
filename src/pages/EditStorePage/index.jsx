@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { H1 } from '../../components/Typography';
 import { useNavigate, useParams } from 'react-router-dom';
 import { StoreForm } from '../../components/StoreForm';
@@ -17,6 +16,7 @@ export const EditStorePAge = () => {
     navigate(PATHS.STORES.ROOT, { replace: true });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getStore(id), []);
   return (
     <div>
