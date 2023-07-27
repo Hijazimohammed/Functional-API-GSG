@@ -10,8 +10,8 @@ const useAPI = (url) => {
 
   const get = async () => {
     try {
-      const { data } = await axios.get(url);
       setIsLoading(true);
+      const { data } = await axios.get(url);
       setStores(data);
     } catch (error) {
       setError(error);
@@ -22,8 +22,8 @@ const useAPI = (url) => {
 
   const getSingle = async (id) => {
     try {
-      const { data } = await axios.get(url + '/' + id);
       setIsLoading(true);
+      const { data } = await axios.get(url + '/' + id);
       setStore(data);
     } catch (error) {
       setError(error);
@@ -34,8 +34,8 @@ const useAPI = (url) => {
 
   const post = async (body) => {
     try {
-      const { data } = await axios.post(url, body);
       setIsLoading(true);
+      const { data } = await axios.post(url, body);
       setStores([...stores, data]);
       setMessage('success');
     } catch (error) {
@@ -47,8 +47,8 @@ const useAPI = (url) => {
 
   const put = async (id, body) => {
     try {
-      const { data } = await axios.put(url + '/' + id, body);
       setIsLoading(true);
+      const { data } = await axios.put(url + '/' + id, body);
       setStores(stores.map((store) => (store.id === id ? data : store)));
       setMessage('success');
     } catch (error) {
@@ -59,8 +59,8 @@ const useAPI = (url) => {
   };
   const del = async (id) => {
     try {
-      await axios.delete(url + '/' + id);
       setIsLoading(true);
+      await axios.delete(url + '/' + id);
       // eslint-disable-next-line eqeqeq
       setStores(stores.filter((store) => store.id != id));
       setMessage('success');
